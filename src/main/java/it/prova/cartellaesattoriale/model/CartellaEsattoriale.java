@@ -25,7 +25,7 @@ public class CartellaEsattoriale {
 	private String descrizione;
 
 	@Column(name = "importo")
-	private int importo;
+	private Integer importo;
 
 	@Column(name = "stato")
 	@Enumerated(EnumType.STRING)
@@ -38,7 +38,7 @@ public class CartellaEsattoriale {
 	public CartellaEsattoriale() {
 	}
 
-	public CartellaEsattoriale(Long id, String descrizione, int importo, Stato stato, Contribuente contribuente) {
+	public CartellaEsattoriale(Long id, String descrizione, Integer importo, Stato stato, Contribuente contribuente) {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
@@ -47,7 +47,7 @@ public class CartellaEsattoriale {
 		this.contribuente = contribuente;
 	}
 
-	public CartellaEsattoriale(String descrizione, int importo, Stato stato, Contribuente contribuente) {
+	public CartellaEsattoriale(String descrizione, Integer importo, Stato stato, Contribuente contribuente) {
 		super();
 		this.descrizione = descrizione;
 		this.importo = importo;
@@ -55,7 +55,7 @@ public class CartellaEsattoriale {
 		this.contribuente = contribuente;
 	}
 
-	public CartellaEsattoriale(String descrizione, int importo, Stato stato) {
+	public CartellaEsattoriale(String descrizione, Integer importo, Stato stato) {
 		super();
 		this.descrizione = descrizione;
 		this.importo = importo;
@@ -78,11 +78,11 @@ public class CartellaEsattoriale {
 		this.descrizione = descrizione;
 	}
 
-	public int getImporto() {
+	public Integer getImporto() {
 		return importo;
 	}
 
-	public void setImporto(int importo) {
+	public void setImporto(Integer importo) {
 		this.importo = importo;
 	}
 

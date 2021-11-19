@@ -24,7 +24,7 @@ public class CartellaEsattorialeDTO {
 
 	@NotNull(message = "{importo.notnull}")
 	@Min(1)
-	private int importo;
+	private Integer importo;
 
 	@NotNull(message = "{stato.notblank}")
 	private Stato stato;
@@ -36,7 +36,7 @@ public class CartellaEsattorialeDTO {
 	public CartellaEsattorialeDTO() {
 	}
 
-	public CartellaEsattorialeDTO(Long id, String descrizione, int importo, Stato stato, ContribuenteDTO contribuente) {
+	public CartellaEsattorialeDTO(Long id, String descrizione, Integer importo, Stato stato, ContribuenteDTO contribuente) {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
@@ -45,7 +45,7 @@ public class CartellaEsattorialeDTO {
 		this.contribuente = contribuente;
 	}
 
-	public CartellaEsattorialeDTO(Long id, String descrizione, int importo, Stato stato) {
+	public CartellaEsattorialeDTO(Long id, String descrizione, Integer importo, Stato stato) {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
@@ -53,7 +53,7 @@ public class CartellaEsattorialeDTO {
 		this.stato = stato;
 	}
 
-	public CartellaEsattorialeDTO(String descrizione, int importo) {
+	public CartellaEsattorialeDTO(String descrizione, Integer importo) {
 		super();
 		this.descrizione = descrizione;
 		this.importo = importo;
@@ -75,11 +75,11 @@ public class CartellaEsattorialeDTO {
 		this.descrizione = descrizione;
 	}
 
-	public int getImporto() {
+	public Integer getImporto() {
 		return importo;
 	}
 
-	public void setImporto(int importo) {
+	public void setImporto(Integer importo) {
 		this.importo = importo;
 	}
 
