@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,5 +30,82 @@ public class CartellaEsattoriale {
 	@Column(name = "stato")
 	@Enumerated(EnumType.STRING)
 	private Stato stato;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "contribuente_id", nullable = false)
+	private Contribuente contribuente;
+
+	public CartellaEsattoriale() {
+	}
+
+	public CartellaEsattoriale(Long id, String descrizione, int importo, Stato stato, Contribuente contribuente) {
+		super();
+		this.id = id;
+		this.descrizione = descrizione;
+		this.importo = importo;
+		this.stato = stato;
+		this.contribuente = contribuente;
+	}
+
+	public CartellaEsattoriale(String descrizione, int importo, Stato stato, Contribuente contribuente) {
+		super();
+		this.descrizione = descrizione;
+		this.importo = importo;
+		this.stato = stato;
+		this.contribuente = contribuente;
+	}
+
+	public CartellaEsattoriale(String descrizione, int importo, Stato stato) {
+		super();
+		this.descrizione = descrizione;
+		this.importo = importo;
+		this.stato = stato;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	public int getImporto() {
+		return importo;
+	}
+
+	public void setImporto(int importo) {
+		this.importo = importo;
+	}
+
+	public Stato getStato() {
+		return stato;
+	}
+
+	public void setStato(Stato stato) {
+		this.stato = stato;
+	}
+
+	public Contribuente getContribuente() {
+		return contribuente;
+	}
+
+	public void setContribuente(Contribuente contribuente) {
+		this.contribuente = contribuente;
+	}
+
+	@Override
+	public String toString() {
+		return "CartellaEsattoriale [id=" + id + ", descrizione=" + descrizione + ", importo=" + importo + ", stato="
+				+ stato + ", contribuente=" + contribuente + "]";
+	}
 
 }
