@@ -23,5 +23,7 @@ public interface ContribuenteService {
 	List<Contribuente> findByExample(Contribuente example);
 
 	List<Contribuente> cercaByCognomeENomeILike(String term);
+	
+	Contribuente findByNomeAndCognome(String nome, String cognome);
 
 }

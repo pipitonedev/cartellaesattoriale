@@ -61,4 +61,9 @@ public class ContribuenteServiceImpl implements ContribuenteService {
 		return repository.findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(term, term);
 	}
 
+	@Override
+	public Contribuente findByNomeAndCognome(String nome, String cognome) {
+		return repository.findByNomeAndCognome(nome, cognome);
+	}
+
 }

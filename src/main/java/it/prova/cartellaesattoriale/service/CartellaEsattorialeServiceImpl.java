@@ -53,4 +53,9 @@ public class CartellaEsattorialeServiceImpl implements CartellaEsattorialeServic
 		return repository.findByExample(example);
 	}
 
+	@Override
+	public List<CartellaEsattoriale> findByDescrizioneAndImporto(String descrizione, Integer importo) {
+		return repository.findByDescrizioneAndImporto(descrizione, importo);
+	}
+
 }
