@@ -34,15 +34,7 @@ public class CartellaEsattorialeDTO {
 	private ContribuenteDTO contribuente;
 
 	public CartellaEsattorialeDTO() {
-	}
-
-	public CartellaEsattorialeDTO(Long id, String descrizione, Integer importo, Stato stato, ContribuenteDTO contribuente) {
-		super();
-		this.id = id;
-		this.descrizione = descrizione;
-		this.importo = importo;
-		this.stato = stato;
-		this.contribuente = contribuente;
+		// TODO Auto-generated constructor stub
 	}
 
 	public CartellaEsattorialeDTO(Long id, String descrizione, Integer importo, Stato stato) {
@@ -53,10 +45,14 @@ public class CartellaEsattorialeDTO {
 		this.stato = stato;
 	}
 
-	public CartellaEsattorialeDTO(String descrizione, Integer importo) {
+	public CartellaEsattorialeDTO(Long id, String descrizione, Integer importo, Stato stato,
+			ContribuenteDTO contribuente) {
 		super();
+		this.id = id;
 		this.descrizione = descrizione;
 		this.importo = importo;
+		this.stato = stato;
+		this.contribuente = contribuente;
 	}
 
 	public Long getId() {
@@ -99,42 +95,35 @@ public class CartellaEsattorialeDTO {
 		this.contribuente = contribuente;
 	}
 
+	// ##########################################################àà
 	public CartellaEsattoriale buildCartellaEsattorialeModel() {
-
-		if (contribuente == null)
-			return new CartellaEsattoriale(this.id, this.descrizione, this.importo, this.stato, null);
-		else
-			return new CartellaEsattoriale(this.id, this.descrizione, this.importo, this.stato,
-					this.contribuente.buildContribuenteModel());
+		return new CartellaEsattoriale(this.id, this.descrizione, this.importo, this.stato,
+				this.contribuente.buildContribuenteModel());
 	}
 
-	public static CartellaEsattorialeDTO buildCartellaEsattorialeDTOFromModel(
-			CartellaEsattoriale cartellaEsattorialeModel, boolean includeContribuenti) {
-		CartellaEsattorialeDTO result = new CartellaEsattorialeDTO(cartellaEsattorialeModel.getId(),
-				cartellaEsattorialeModel.getDescrizione(), cartellaEsattorialeModel.getImporto(),
-				cartellaEsattorialeModel.getStato());
+	public static CartellaEsattorialeDTO buildCartellaEsattorialeDTOFromModel(CartellaEsattoriale cartellaModel,
+			boolean includeRegisti) {
+		CartellaEsattorialeDTO result = new CartellaEsattorialeDTO(cartellaModel.getId(),
+				cartellaModel.getDescrizione(), cartellaModel.getImporto(), cartellaModel.getStato());
 
-		if (includeContribuenti)
+		if (includeRegisti)
 			result.setContribuente(
-					ContribuenteDTO.buildContribuenteDTOFromModel(cartellaEsattorialeModel.getContribuente(), false));
+					ContribuenteDTO.buildContribuenteDTOFromModel(cartellaModel.getContribuente(), false));
 
 		return result;
 	}
 
 	public static List<CartellaEsattorialeDTO> createCartellaEsattorialeDTOListFromModelList(
-			List<CartellaEsattoriale> modelListInput, boolean includeContribuenti) {
-		return modelListInput.stream().map(cartellaEsattorialeEntity -> {
-			return CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEsattorialeEntity,
-					includeContribuenti);
+			List<CartellaEsattoriale> modelListInput, boolean includeRegisti) {
+		return modelListInput.stream().map(cartellaEntity -> {
+			return CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEntity, includeRegisti);
 		}).collect(Collectors.toList());
 	}
 
 	public static Set<CartellaEsattorialeDTO> createCartellaEsattorialeDTOSetFromModelSet(
-			Set<CartellaEsattoriale> modelListInput, boolean includeContribuenti) {
-		return modelListInput.stream().map(cartellaEsattorialeEntity -> {
-			return CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEsattorialeEntity,
-					includeContribuenti);
+			Set<CartellaEsattoriale> modelListInput, boolean includeRegisti) {
+		return modelListInput.stream().map(cartellaEntity -> {
+			return CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEntity, includeRegisti);
 		}).collect(Collectors.toSet());
 	}
-
 }

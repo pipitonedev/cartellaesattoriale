@@ -28,21 +28,17 @@ public class ContribuenteDTO {
 	@NotNull(message = "{dataDiNascita.notnull}")
 	private Date dataDiNascita;
 
-	@NotBlank(message = "{codFiscale.notblank}")
+	@NotBlank(message = "{codiceFiscale.notblank}")
 	private String codiceFiscale;
 
 	@NotBlank(message = "{indirizzo.notblank}")
 	private String indirizzo;
 
 	@JsonIgnoreProperties(value = { "contribuente" })
-	private Set<CartellaEsattorialeDTO> cartelleEsattoriali = new HashSet<CartellaEsattorialeDTO>(0);
+	private Set<CartellaEsattorialeDTO> cartelle = new HashSet<CartellaEsattorialeDTO>(0);
 
 	public ContribuenteDTO() {
-	}
-
-	public ContribuenteDTO(Long id) {
-		super();
-		this.id = id;
+		// TODO Auto-generated constructor stub
 	}
 
 	public ContribuenteDTO(Long id, String nome, String cognome, Date dataDiNascita, String codiceFiscale,
@@ -53,6 +49,35 @@ public class ContribuenteDTO {
 		this.cognome = cognome;
 		this.dataDiNascita = dataDiNascita;
 		this.codiceFiscale = codiceFiscale;
+		this.indirizzo = indirizzo;
+	}
+
+	public ContribuenteDTO(String nome, String cognome, Date dataDiNascita, String codiceFiscale, String indirizzo) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dataDiNascita = dataDiNascita;
+		this.codiceFiscale = codiceFiscale;
+		this.indirizzo = indirizzo;
+	}
+
+	public ContribuenteDTO(Long id, String nome, String cognome, Date dataDiNascita, String codiceFiscale,
+			String indirizzo, Set<CartellaEsattorialeDTO> cartelle) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dataDiNascita = dataDiNascita;
+		this.codiceFiscale = codiceFiscale;
+		this.indirizzo = indirizzo;
+		this.cartelle = cartelle;
+	}
+
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
 
@@ -96,49 +121,39 @@ public class ContribuenteDTO {
 		this.codiceFiscale = codiceFiscale;
 	}
 
-	public String getIndirizzo() {
-		return indirizzo;
+	public Set<CartellaEsattorialeDTO> getCartelle() {
+		return cartelle;
 	}
 
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
+	public void setCartelle(Set<CartellaEsattorialeDTO> cartelle) {
+		this.cartelle = cartelle;
 	}
 
-	public Set<CartellaEsattorialeDTO> getCartelleEsattoriali() {
-		return cartelleEsattoriali;
-	}
-
-	public void setCartelleEsattoriali(Set<CartellaEsattorialeDTO> cartelleEsattoriali) {
-		this.cartelleEsattoriali = cartelleEsattoriali;
-	}
-
+	// ##################################################
 	public Contribuente buildContribuenteModel() {
 		return new Contribuente(this.id, this.nome, this.cognome, this.dataDiNascita, this.codiceFiscale,
 				this.indirizzo);
-
 	}
 
 	public static ContribuenteDTO buildContribuenteDTOFromModel(Contribuente contribuenteModel,
-			boolean includeCartelleEsattoriali) {
+			boolean includeCartelle) {
 		ContribuenteDTO result = new ContribuenteDTO(contribuenteModel.getId(), contribuenteModel.getNome(),
 				contribuenteModel.getCognome(), contribuenteModel.getDataDiNascita(),
 				contribuenteModel.getCodiceFiscale(), contribuenteModel.getIndirizzo());
-		if (includeCartelleEsattoriali)
-			result.setCartelleEsattoriali(CartellaEsattorialeDTO
+		if (includeCartelle)
+			result.setCartelle(CartellaEsattorialeDTO
 					.createCartellaEsattorialeDTOSetFromModelSet(contribuenteModel.getCartelleEsattoriali(), false));
 		return result;
 	}
 
 	public static List<ContribuenteDTO> createContribuenteDTOListFromModelList(List<Contribuente> modelListInput,
-			boolean includeCartelleEsattoriali) {
+			boolean includeCartelle) {
 		return modelListInput.stream().map(contribuenteEntity -> {
-			ContribuenteDTO result = ContribuenteDTO.buildContribuenteDTOFromModel(contribuenteEntity,
-					includeCartelleEsattoriali);
-			if (includeCartelleEsattoriali)
-				result.setCartelleEsattoriali(CartellaEsattorialeDTO.createCartellaEsattorialeDTOSetFromModelSet(
-						contribuenteEntity.getCartelleEsattoriali(), false));
+			ContribuenteDTO result = ContribuenteDTO.buildContribuenteDTOFromModel(contribuenteEntity, includeCartelle);
+			if (includeCartelle)
+				result.setCartelle(CartellaEsattorialeDTO
+						.createCartellaEsattorialeDTOSetFromModelSet(contribuenteEntity.getCartelleEsattoriali(), false));
 			return result;
 		}).collect(Collectors.toList());
 	}
-
 }
