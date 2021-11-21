@@ -97,15 +97,15 @@ public class ContribuenteController {
 		List<ContribuenteBusinessDTO> contribuenti = ContribuenteBusinessDTO
 				.createContribuenteBusinessDTOListFromModelList(contribuenteService.listAllElementsEager(), true);
 
-		for (ContribuenteBusinessDTO contribuentiItem : contribuenti) {
+			contribuenti.stream().forEach(item -> {
 
-			for (CartellaEsattorialeDTO cartelleItem : contribuentiItem.getCartelleEsattoriali()) {
+			item.getCartelleEsattoriali().stream().forEach(cartelle -> {
 
-				if (cartelleItem.getStato().equals(Stato.IN_CONTENZIOSO)) {
-					contribuentiItem.setDaAttenzionare(true);
+				if (cartelle.getStato().equals(Stato.IN_CONTENZIOSO)) {
+					item.setDaAttenzionare(true);
 				}
-			}
-		}
+			});
+		});
 		return contribuenti;
 
 	}

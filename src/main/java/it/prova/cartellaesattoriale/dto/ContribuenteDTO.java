@@ -33,7 +33,7 @@ public class ContribuenteDTO {
 
 	@NotBlank(message = "{indirizzo.notblank}")
 	private String indirizzo;
-
+	
 	@JsonIgnoreProperties(value = { "contribuente" })
 	private Set<CartellaEsattorialeDTO> cartelle = new HashSet<CartellaEsattorialeDTO>(0);
 

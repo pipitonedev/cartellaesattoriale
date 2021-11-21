@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -22,16 +23,16 @@ public class ContribuenteBusinessDTO {
 	@NotBlank(message = "{nome.notblank}")
 	private String nome;
 
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{cognome.notblank}")
 	private String cognome;
 
-	@NotNull(message = "{nome.notblank}")
-	private Date dataNascita;
+	@NotNull(message = "{dataDiNascita.notnull}")
+	private Date dataDiNascita;
 
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{codiceFiscale.notblank}")
 	private String codiceFiscale;
 
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{indirizzo.notblank}")
 	private String indirizzo;
 
 	private Integer importoTotale;
@@ -39,69 +40,60 @@ public class ContribuenteBusinessDTO {
 	private Integer inContenzioso;
 	private Boolean daAttenzionare;
 
+	@JsonIgnore
 	@JsonIgnoreProperties(value = { "contribuente" })
-	private Set<CartellaEsattorialeDTO> CartelleEsattoriali = new HashSet<CartellaEsattorialeDTO>();
+	private Set<CartellaEsattorialeDTO> cartelleEsattoriali = new HashSet<CartellaEsattorialeDTO>(0);
 
 	public ContribuenteBusinessDTO() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public ContribuenteBusinessDTO(Long id, String nome, String cognome, Date dataNascita, String codiceFiscale,
-			String indirizzo, Integer importoTotale, Integer conclusoEPagato, Integer inContenzioso,
-			Boolean daAttenzionare, Set<CartellaEsattorialeDTO> CartelleEsattoriali) {
+	public ContribuenteBusinessDTO(Long id, String nome, String cognome, Date dataDiNascita, String codiceFiscale,
+			String indirizzo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
-		this.dataNascita = dataNascita;
+		this.dataDiNascita = dataDiNascita;
 		this.codiceFiscale = codiceFiscale;
 		this.indirizzo = indirizzo;
-		this.importoTotale = importoTotale;
-		this.conclusoEPagato = conclusoEPagato;
+	}
+
+	public ContribuenteBusinessDTO(String nome, String cognome, Date dataDiNascita, String codiceFiscale,
+			String indirizzo) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dataDiNascita = dataDiNascita;
+		this.codiceFiscale = codiceFiscale;
+		this.indirizzo = indirizzo;
+	}
+
+	public ContribuenteBusinessDTO(Long id, String nome, String cognome, Date dataDiNascita, String codiceFiscale,
+			String indirizzo, Set<CartellaEsattorialeDTO> cartelleEsattoriali) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dataDiNascita = dataDiNascita;
+		this.codiceFiscale = codiceFiscale;
+		this.indirizzo = indirizzo;
+		this.cartelleEsattoriali = cartelleEsattoriali;
+	}
+
+	public Integer getInContenzioso() {
+		return inContenzioso;
+	}
+
+	public void setInContenzioso(Integer inContenzioso) {
 		this.inContenzioso = inContenzioso;
-		this.daAttenzionare = daAttenzionare;
-		this.CartelleEsattoriali = CartelleEsattoriali;
 	}
 
-	public ContribuenteBusinessDTO(Long id, @NotBlank(message = "{nome.notblank}") String nome,
-			@NotBlank(message = "{nome.notblank}") String cognome,
-			@NotNull(message = "{nome.notblank}") Date dataNascita,
-			@NotBlank(message = "{nome.notblank}") String codiceFiscale,
-			@NotBlank(message = "{nome.notblank}") String indirizzo, Set<CartellaEsattorialeDTO> CartelleEsattoriali) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.dataNascita = dataNascita;
-		this.codiceFiscale = codiceFiscale;
-		this.indirizzo = indirizzo;
-		this.CartelleEsattoriali = CartelleEsattoriali;
+	public String getIndirizzo() {
+		return indirizzo;
 	}
 
-	public ContribuenteBusinessDTO(@NotBlank(message = "{nome.notblank}") String nome,
-			@NotBlank(message = "{nome.notblank}") String cognome,
-			@NotNull(message = "{nome.notblank}") Date dataNascita,
-			@NotBlank(message = "{nome.notblank}") String codiceFiscale,
-			@NotBlank(message = "{nome.notblank}") String indirizzo, Set<CartellaEsattorialeDTO> CartelleEsattoriali) {
-		super();
-		this.nome = nome;
-		this.cognome = cognome;
-		this.dataNascita = dataNascita;
-		this.codiceFiscale = codiceFiscale;
-		this.indirizzo = indirizzo;
-		this.CartelleEsattoriali = CartelleEsattoriali;
-	}
-
-	public ContribuenteBusinessDTO(Long id, @NotBlank(message = "{nome.notblank}") String nome,
-			@NotBlank(message = "{nome.notblank}") String cognome,
-			@NotNull(message = "{nome.notblank}") Date dataNascita,
-			@NotBlank(message = "{nome.notblank}") String codiceFiscale,
-			@NotBlank(message = "{nome.notblank}") String indirizzo) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.dataNascita = dataNascita;
-		this.codiceFiscale = codiceFiscale;
+	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
 
@@ -129,12 +121,12 @@ public class ContribuenteBusinessDTO {
 		this.cognome = cognome;
 	}
 
-	public Date getDataNascita() {
-		return dataNascita;
+	public Date getDataDiNascita() {
+		return dataDiNascita;
 	}
 
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
+	public void setDataDiNascita(Date dataDiNascita) {
+		this.dataDiNascita = dataDiNascita;
 	}
 
 	public String getCodiceFiscale() {
@@ -143,14 +135,6 @@ public class ContribuenteBusinessDTO {
 
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
-	}
-
-	public String getIndirizzo() {
-		return indirizzo;
-	}
-
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
 	}
 
 	public Integer getImportoTotale() {
@@ -169,12 +153,12 @@ public class ContribuenteBusinessDTO {
 		this.conclusoEPagato = conclusoEPagato;
 	}
 
-	public Integer getInContenzioso() {
-		return inContenzioso;
+	public Set<CartellaEsattorialeDTO> getCartelleEsattoriali() {
+		return cartelleEsattoriali;
 	}
 
-	public void setInContenzioso(Integer inContenzioso) {
-		this.inContenzioso = inContenzioso;
+	public void setCartelleEsattoriali(Set<CartellaEsattorialeDTO> cartelleEsattoriali) {
+		this.cartelleEsattoriali = cartelleEsattoriali;
 	}
 
 	public Boolean getDaAttenzionare() {
@@ -185,19 +169,13 @@ public class ContribuenteBusinessDTO {
 		this.daAttenzionare = daAttenzionare;
 	}
 
-	public Set<CartellaEsattorialeDTO> getCartelleEsattoriali() {
-		return CartelleEsattoriali;
-	}
-
-	public void setCartelleEsattoriali(Set<CartellaEsattorialeDTO> cartelleEsattoriali) {
-		CartelleEsattoriali = cartelleEsattoriali;
-	}
-
+	// ##################################################
 	public Contribuente buildContribuenteModel() {
-		return new Contribuente(this.id, this.nome, this.cognome, this.dataNascita, this.codiceFiscale, this.indirizzo);
+		return new Contribuente(this.id, this.nome, this.cognome, this.dataDiNascita, this.codiceFiscale,
+				this.indirizzo);
 	}
 
-	public static ContribuenteBusinessDTO buildContribuenteBusinessDTOFromModel(Contribuente contribuenteModel,
+	public static ContribuenteBusinessDTO buildContribuenteDTOFromModel(Contribuente contribuenteModel,
 			boolean includeCartelle) {
 		ContribuenteBusinessDTO result = new ContribuenteBusinessDTO(contribuenteModel.getId(),
 				contribuenteModel.getNome(), contribuenteModel.getCognome(), contribuenteModel.getDataDiNascita(),
@@ -211,8 +189,8 @@ public class ContribuenteBusinessDTO {
 	public static List<ContribuenteBusinessDTO> createContribuenteBusinessDTOListFromModelList(
 			List<Contribuente> modelListInput, boolean includeCartelle) {
 		return modelListInput.stream().map(contribuenteEntity -> {
-			ContribuenteBusinessDTO result = ContribuenteBusinessDTO
-					.buildContribuenteBusinessDTOFromModel(contribuenteEntity, includeCartelle);
+			ContribuenteBusinessDTO result = ContribuenteBusinessDTO.buildContribuenteDTOFromModel(contribuenteEntity,
+					includeCartelle);
 			if (includeCartelle)
 				result.setCartelleEsattoriali(CartellaEsattorialeDTO.createCartellaEsattorialeDTOSetFromModelSet(
 						contribuenteEntity.getCartelleEsattoriali(), false));
